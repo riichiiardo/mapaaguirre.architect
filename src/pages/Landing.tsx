@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SectionHeading from "@/components/SectionHeading";
-import { projects } from "@/data/projects";
+import ProjectCarousel from "@/components/ProjectCarousel";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -137,63 +137,17 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ─── Featured Projects — Cover photos only (Figma style) ── */}
+      {/* ─── Projects Carousel ──────────────────────────────── */}
       <section className="py-24 lg:py-32 bg-secondary/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <SectionHeading
             eyebrow="Portafolio"
             title="Mis proyectos"
-            description="Cada proyecto es una oportunidad para crear algo único. Estos son los trabajos que mejor representan mi visión del diseño."
+            description="Cada proyecto es una oportunidad para crear algo único. Haz clic en cualquiera para explorar los detalles."
           />
-
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.slug}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-30px" }}
-                variants={fadeUp}
-              >
-                <Link
-                  to={`/proyectos/${project.slug}`}
-                  className="group block"
-                >
-                  {/* Cover photo only — like Figma */}
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
-                    <img
-                      src={project.coverImage}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    {/* Gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    {/* Title always visible at bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-primary/50 to-transparent">
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-primary-foreground/50 mb-1">
-                        {project.category}
-                      </p>
-                      <h3 className="font-serif text-lg text-primary-foreground leading-snug">
-                        {project.title}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-14 text-center">
-            <Link
-              to="/proyectos"
-              className="inline-flex items-center gap-2 px-7 py-3.5 text-[12px] uppercase tracking-[0.15em] font-medium border border-border rounded hover:bg-foreground hover:text-background transition-colors"
-            >
-              Ver Todos los Proyectos
-              <ArrowUpRight className="size-4" />
-            </Link>
-          </div>
+        </div>
+        <div className="mt-8">
+          <ProjectCarousel />
         </div>
       </section>
 
