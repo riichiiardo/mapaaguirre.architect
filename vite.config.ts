@@ -6,6 +6,8 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Base path for GitHub Pages deployment (repo name becomes the path)
+  base: process.env.GITHUB_ACTIONS ? '/mapaaguirre.build/' : '/',
   plugins: [react(), vlyPlugin(), tailwindcss()],
   resolve: {
     alias: {
