@@ -1,13 +1,32 @@
 import { useParams, Link, Navigate } from "react-router";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, MapPin, Calendar, Ruler, User } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  MapPin,
+  Calendar,
+  Ruler,
+  User,
+} from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { projects, getProjectBySlug } from "@/data/projects";
 
-const fadeUpVariants = {
+const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.8, ease: "easeOut" as const },
+  },
 };
 
 export default function ProjectDetail() {
@@ -25,29 +44,32 @@ export default function ProjectDetail() {
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
 
-      {/* Cover */}
-      <section className="relative h-[60vh] lg:h-[75vh] overflow-hidden">
-        <img
+      {/* ─── Hero Cover ────────────────────────────────────────── */}
+      <section className="relative h-[70vh] lg:h-[85vh] overflow-hidden">
+        <motion.img
+          initial={{ scale: 1.05 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
           src={project.gallery[0]}
           alt={project.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
           <div className="mx-auto max-w-7xl">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-[11px] uppercase tracking-[0.25em] text-primary-foreground/50 mb-3"
+              transition={{ delay: 0.3 }}
+              className="text-[11px] uppercase tracking-[0.3em] text-primary-foreground/50 mb-4"
             >
               {project.category}
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              className="font-serif text-4xl sm:text-5xl lg:text-6xl text-primary-foreground leading-[1.1] tracking-tight"
+              transition={{ delay: 0.45, duration: 0.7 }}
+              className="font-serif text-4xl sm:text-5xl lg:text-7xl text-primary-foreground leading-[1.05] tracking-tight"
             >
               {project.title}
             </motion.h1>
@@ -55,175 +77,193 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Details */}
-      <section className="py-16 lg:py-24">
+      {/* ─── Project Meta Strip ────────────────────────────────── */}
+      <section className="border-b border-border">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          {/* Meta strip */}
-          <div className="flex flex-wrap gap-8 pb-12 border-b border-border">
+          <div className="flex flex-wrap gap-6 lg:gap-10 py-6">
             {[
               { icon: MapPin, label: project.location },
               { icon: Calendar, label: project.year },
               { icon: Ruler, label: project.area },
-              { icon: User, label: `Cliente: ${project.client}` },
+              { icon: User, label: project.client },
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex items-center gap-2 text-sm text-muted-foreground"
+                className="flex items-center gap-2.5 text-sm text-muted-foreground"
               >
-                <item.icon className="size-4 text-accent" />
-                {item.label}
+                <item.icon className="size-4 text-accent shrink-0" />
+                <span>{item.label}</span>
               </div>
             ))}
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-12">
-            {/* Main content */}
-            <div className="lg:col-span-2 space-y-12">
-              <motion.p
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUpVariants}
-                className="text-lg leading-relaxed text-muted-foreground"
-              >
-                {project.description}
-              </motion.p>
-
-              {/* Challenges */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUpVariants}
-              >
-                <h3 className="font-serif text-xl text-foreground mb-3">
-                  Desafíos y Soluciones
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.challenges}
-                </p>
-              </motion.div>
-
-              {/* Design Concept */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUpVariants}
-              >
-                <h3 className="font-serif text-xl text-foreground mb-3">
-                  Diseño y Concepto
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.designConcept}
-                </p>
-              </motion.div>
-
-              {/* Results */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUpVariants}
-              >
-                <h3 className="font-serif text-xl text-foreground mb-3">
-                  Resultados
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {project.results}
-                </p>
-              </motion.div>
-
-              {/* Gallery */}
-              <div className="space-y-6">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium">
-                  Galería del Proyecto
-                </p>
-                {project.gallery.map((img, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                    className="rounded-lg overflow-hidden"
-                  >
-                    <img
-                      src={img}
-                      alt={`${project.title} — imagen ${i + 1}`}
-                      className="w-full h-auto object-cover"
-                      loading="lazy"
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <aside className="space-y-10">
-              {/* Services */}
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium mb-4">
-                  Servicios
-                </p>
-                <ul className="space-y-2.5">
-                  {project.services.map((s) => (
-                    <li
-                      key={s}
-                      className="text-sm text-muted-foreground flex items-start gap-2"
-                    >
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Project Info */}
-              <div className="p-6 bg-secondary/50 rounded-lg space-y-4">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium">
-                  Ficha del Proyecto
-                </p>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Ubicación</span>
-                    <span className="text-foreground font-medium">{project.location}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Área</span>
-                    <span className="text-foreground font-medium">{project.area}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Año</span>
-                    <span className="text-foreground font-medium">{project.year}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cliente</span>
-                    <span className="text-foreground font-medium text-right max-w-[200px]">{project.client}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="p-6 bg-primary rounded-lg text-primary-foreground">
-                <p className="font-serif text-lg mb-2">¿Te inspira este proyecto?</p>
-                <p className="text-sm text-primary-foreground/60 mb-4">
-                  Cuéntame tu idea y exploremos juntos las posibilidades.
-                </p>
-                <Link
-                  to="/contacto"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] uppercase tracking-[0.12em] font-medium bg-primary-foreground text-primary rounded hover:bg-primary-foreground/90 transition-colors"
-                >
-                  Contactar
-                  <ArrowRight className="size-3.5" />
-                </Link>
-              </div>
-            </aside>
           </div>
         </div>
       </section>
 
-      {/* Prev / Next */}
+      {/* ─── Editorial Layout: Image + Text alternating ────────── */}
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          {/* Intro description — full width */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeUp}
+            className="max-w-3xl mx-auto text-center mb-20"
+          >
+            <p className="text-lg sm:text-xl leading-relaxed text-muted-foreground">
+              {project.description}
+            </p>
+          </motion.div>
+
+          {/* Gallery Image 1 — Full width */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeIn}
+            className="rounded-lg overflow-hidden mb-20"
+          >
+            <img
+              src={project.gallery[0]}
+              alt={`${project.title} — vista principal`}
+              className="w-full h-auto object-cover"
+              loading="lazy"
+            />
+          </motion.div>
+
+          {/* Challenges & Design Concept — Side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-20">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <p className="text-[11px] uppercase tracking-[0.25em] text-accent font-medium mb-4">
+                Desafíos y Soluciones
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.challenges}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <p className="text-[11px] uppercase tracking-[0.25em] text-accent font-medium mb-4">
+                Diseño y Concepto
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.designConcept}
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Gallery Image 2 — Offset left */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeIn}
+            className="max-w-4xl rounded-lg overflow-hidden mb-20"
+          >
+            <img
+              src={project.gallery[1]}
+              alt={`${project.title} — vista interior`}
+              className="w-full h-auto object-cover"
+              loading="lazy"
+            />
+          </motion.div>
+
+          {/* Results — Centered highlight */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="max-w-3xl mx-auto text-center mb-20 py-12 border-y border-border"
+          >
+            <p className="text-[11px] uppercase tracking-[0.25em] text-accent font-medium mb-4">
+              Resultados
+            </p>
+            <p className="text-lg leading-relaxed text-muted-foreground italic">
+              &ldquo;{project.results}&rdquo;
+            </p>
+          </motion.div>
+
+          {/* Gallery Image 3 — Full width */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeIn}
+            className="rounded-lg overflow-hidden mb-20"
+          >
+            <img
+              src={project.gallery[2]}
+              alt={`${project.title} — vista final`}
+              className="w-full h-auto object-cover"
+              loading="lazy"
+            />
+          </motion.div>
+
+          {/* Services + Contact sidebar */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+            {/* Services */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="lg:col-span-2"
+            >
+              <p className="text-[11px] uppercase tracking-[0.25em] text-accent font-medium mb-6">
+                Servicios del Proyecto
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.services.map((s) => (
+                  <div
+                    key={s}
+                    className="flex items-center gap-3 p-4 bg-secondary/40 rounded-lg"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-accent shrink-0" />
+                    <span className="text-sm text-foreground">{s}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* CTA Card */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <div className="p-8 bg-primary rounded-lg text-primary-foreground sticky top-28">
+                <p className="font-serif text-xl mb-2">
+                  ¿Te inspira este proyecto?
+                </p>
+                <p className="text-sm text-primary-foreground/60 mb-6">
+                  Cuéntame tu idea y exploremos juntos las posibilidades.
+                </p>
+                <Link
+                  to="/contacto"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.12em] font-medium bg-primary-foreground text-primary rounded hover:bg-primary-foreground/90 transition-colors"
+                >
+                  Iniciar Conversación
+                  <ArrowRight className="size-4" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Prev / Next ───────────────────────────────────────── */}
       <section className="border-t border-border">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">

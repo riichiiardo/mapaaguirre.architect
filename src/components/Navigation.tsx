@@ -15,6 +15,9 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  // Only the landing page hero has a dark background
+  const isOnHero = location.pathname === "/" && !scrolled;
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -23,25 +26,50 @@ export default function Navigation() {
 
   useEffect(() => {
     setIsOpen(false);
+    setScrolled(false);
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-[0_1px_0_0_0_0.08]"
+          ? "bg-background/95 backdrop-blur-md shadow-[0_1px_0_0_0.08]"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="Inicio">
-            <span className="font-serif text-xl tracking-tight text-foreground transition-colors group-hover:text-accent">
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
+            aria-label="Inicio"
+          >
+            <span
+              className={`font-serif text-xl tracking-tight transition-colors duration-300 group-hover:text-accent ${
+                isOnHero
+                  ? "text-primary-foreground"
+                  : "text-foreground"
+              }`}
+            >
               MAPA
             </span>
-            <span className="hidden sm:block w-px h-5 bg-border" aria-hidden="true" />
-            <span className="hidden sm:block text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
+            <span
+              className={`hidden sm:block w-px h-5 transition-colors duration-300 ${
+                isOnHero
+                  ? "bg-primary-foreground/30"
+                  : "bg-border"
+              }`}
+              aria-hidden="true"
+            />
+            <span
+              className={`hidden sm:block text-[11px] uppercase tracking-[0.2em] font-medium transition-colors duration-300 ${
+                isOnHero
+                  ? "text-primary-foreground/60"
+                  : "text-muted-foreground"
+              }`}
+            >
               Arquitectura & Diseño
             </span>
           </Link>
@@ -55,26 +83,45 @@ export default function Navigation() {
                   key={link.path}
                   to={link.path}
                   className={`relative px-4 py-2 text-[13px] uppercase tracking-[0.15em] font-medium transition-colors duration-300 ${
-                    isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                    isOnHero
+                      ? isActive
+                        ? "text-primary-foreground"
+                        : "text-primary-foreground/70 hover:text-primary-foreground"
+                      : isActive
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {link.label}
                   {isActive && (
                     <motion.div
                       layoutId="nav-underline"
-                      className="absolute bottom-0 left-4 right-4 h-px bg-accent"
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      className={`absolute bottom-0 left-4 right-4 h-px ${
+                        isOnHero ? "bg-accent" : "bg-accent"
+                      }`}
+                      transition={{
+                        type: "spring",
+                        stiffness: 350,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </Link>
               );
             })}
-            <div className="w-px h-5 bg-border mx-2" aria-hidden="true" />
+            <div
+              className={`w-px h-5 mx-2 transition-colors duration-300 ${
+                isOnHero ? "bg-primary-foreground/20" : "bg-border"
+              }`}
+              aria-hidden="true"
+            />
             <Link
               to="/contacto"
-              className="ml-2 px-5 py-2.5 text-[12px] uppercase tracking-[0.15em] font-medium bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors"
+              className={`ml-2 px-5 py-2.5 text-[12px] uppercase tracking-[0.15em] font-medium rounded transition-colors duration-300 ${
+                isOnHero
+                  ? "bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+              }`}
             >
               Cotizar
             </Link>
@@ -83,7 +130,9 @@ export default function Navigation() {
           {/* Mobile toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-foreground"
+            className={`md:hidden p-2 transition-colors duration-300 ${
+              isOnHero ? "text-primary-foreground" : "text-foreground"
+            }`}
             aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isOpen}
           >
