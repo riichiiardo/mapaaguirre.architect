@@ -16,8 +16,6 @@ const fadeUp = {
 };
 
 export default function Landing() {
-  const featured = projects.slice(0, 3);
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
@@ -148,8 +146,8 @@ export default function Landing() {
             description="Cada proyecto es una oportunidad para crear algo único. Estos son los trabajos que mejor representan mi visión del diseño."
           />
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featured.map((project, i) => (
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project, i) => (
               <motion.div
                 key={project.slug}
                 custom={i}
