@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from "react-router";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, MapPin, Calendar, Ruler } from "lucide-react";
+import { ArrowLeft, ArrowRight, MapPin, Calendar, Ruler, User } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { projects, getProjectBySlug } from "@/data/projects";
@@ -64,6 +64,7 @@ export default function ProjectDetail() {
               { icon: MapPin, label: project.location },
               { icon: Calendar, label: project.year },
               { icon: Ruler, label: project.area },
+              { icon: User, label: `Cliente: ${project.client}` },
             ].map((item) => (
               <div
                 key={item.label}
@@ -77,7 +78,7 @@ export default function ProjectDetail() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-12">
             {/* Main content */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 space-y-12">
               <motion.p
                 initial="hidden"
                 whileInView="visible"
@@ -88,8 +89,56 @@ export default function ProjectDetail() {
                 {project.description}
               </motion.p>
 
+              {/* Challenges */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUpVariants}
+              >
+                <h3 className="font-serif text-xl text-foreground mb-3">
+                  Desafíos y Soluciones
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.challenges}
+                </p>
+              </motion.div>
+
+              {/* Design Concept */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUpVariants}
+              >
+                <h3 className="font-serif text-xl text-foreground mb-3">
+                  Diseño y Concepto
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.designConcept}
+                </p>
+              </motion.div>
+
+              {/* Results */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUpVariants}
+              >
+                <h3 className="font-serif text-xl text-foreground mb-3">
+                  Resultados
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.results}
+                </p>
+              </motion.div>
+
               {/* Gallery */}
-              <div className="mt-12 space-y-6">
+              <div className="space-y-6">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium">
+                  Galería del Proyecto
+                </p>
                 {project.gallery.map((img, i) => (
                   <motion.div
                     key={i}
@@ -130,35 +179,40 @@ export default function ProjectDetail() {
                 </ul>
               </div>
 
-              {/* Features */}
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium mb-4">
-                  Características
+              {/* Project Info */}
+              <div className="p-6 bg-secondary/50 rounded-lg space-y-4">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-accent font-medium">
+                  Ficha del Proyecto
                 </p>
-                <ul className="space-y-2.5">
-                  {project.features.map((f) => (
-                    <li
-                      key={f}
-                      className="text-sm text-muted-foreground flex items-start gap-2"
-                    >
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Ubicación</span>
+                    <span className="text-foreground font-medium">{project.location}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Área</span>
+                    <span className="text-foreground font-medium">{project.area}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Año</span>
+                    <span className="text-foreground font-medium">{project.year}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Cliente</span>
+                    <span className="text-foreground font-medium text-right max-w-[200px]">{project.client}</span>
+                  </div>
+                </div>
               </div>
 
               {/* CTA */}
-              <div className="p-6 bg-secondary/50 rounded-lg">
-                <p className="font-serif text-lg text-foreground mb-2">
-                  ¿Te inspira este proyecto?
-                </p>
-                <p className="text-sm text-muted-foreground mb-4">
+              <div className="p-6 bg-primary rounded-lg text-primary-foreground">
+                <p className="font-serif text-lg mb-2">¿Te inspira este proyecto?</p>
+                <p className="text-sm text-primary-foreground/60 mb-4">
                   Cuéntame tu idea y exploremos juntos las posibilidades.
                 </p>
                 <Link
                   to="/contacto"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] uppercase tracking-[0.12em] font-medium bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] uppercase tracking-[0.12em] font-medium bg-primary-foreground text-primary rounded hover:bg-primary-foreground/90 transition-colors"
                 >
                   Contactar
                   <ArrowRight className="size-3.5" />

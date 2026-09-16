@@ -53,7 +53,7 @@ export default function About() {
               >
                 <div className="aspect-[3/4] rounded-lg overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80"
+                    src="/images/home/profile.png"
                     alt="Maria Paula Aguirre"
                     className="w-full h-full object-cover"
                   />

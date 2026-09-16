@@ -25,12 +25,11 @@ export default function Landing() {
       {/* ─── Hero ──────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image */}
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=85"
-            alt="Interior de diseño contemporáneo"
-            className="w-full h-full object-cover"
-          />
+        <div className="absolute inset-0">            <img
+              src="/images/home/hero-bg.png"
+              alt="Interior de diseño contemporáneo"
+              className="w-full h-full object-cover"
+            />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-primary/30" />
         </div>
 
@@ -167,6 +166,7 @@ export default function Landing() {
                       src={project.coverImage}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
@@ -214,24 +214,24 @@ export default function Landing() {
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Diseño de Interiores",
+                title: "Gerencia de Proyecto",
                 description:
-                  "Conceptualización y desarrollo integral de espacios residenciales, comerciales y de hospitalidad que reflejan tu identidad.",
+                  "Gestión integral del proyecto desde la conceptualización hasta la entrega, asegurando tiempos, costos y calidad.",
               },
               {
-                title: "Remodelación",
+                title: "Planeación Estratégica",
                 description:
-                  "Transformación completa de espacios existentes con soluciones creativas que maximizan su potencial.",
+                  "Análisis y planificación del espacio según las necesidades funcionales y estéticas del cliente.",
               },
               {
-                title: "Asesoría de Color y Materiales",
+                title: "Costos y Presupuestos",
                 description:
-                  "Selección cuidadosa de paletas cromáticas, texturas y materiales que crean ambiances armónicos y funcionales.",
+                  "Elaboración detallada de presupuestos y control de costos para cada fase del proyecto.",
               },
               {
-                title: "Diseño de Mobiliario",
+                title: "Diseño 3D",
                 description:
-                  "Piezas a medida diseñadas específicamente para cada proyecto, fusionando estética con funcionalidad.",
+                    "Visualización fotorrealista del proyecto antes de su ejecución, facilitando la toma de decisiones.",
               },
             ].map((service, i) => (
               <motion.div
@@ -271,7 +271,7 @@ export default function Landing() {
             >
               <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80"
+                  src="/images/home/about-portrait.png"
                   alt="Maria Paula Aguirre — Arquitecta y Diseñadora de Interiores"
                   className="w-full h-full object-cover"
                 />
