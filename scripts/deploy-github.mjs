@@ -16,7 +16,7 @@ import path from "node:path";
 
 const TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = process.argv[2] || "riichiiardo";
-const REPO = process.argv[3] || "mapaaguirre.build";
+const REPO = process.argv[3] || "mapaaguirre.architect";
 const BRANCH = process.argv[4] || "main";
 const ROOT = process.cwd();
 
@@ -105,7 +105,7 @@ console.log("Uploading blobs...");
 const tree = [];
 // Delete stale files that should not live in the repo (e.g. 79MB zip, env keys).
 for (const stale of ["mapaaguirre-build.zip", ".env.keys", "sst-env.d.ts"]) {
-  tree.push({ path: stale, sha: null }); // sha:null deletes the path
+  tree.push({ path: stale, mode: "100644", type: "blob", sha: null }); // sha:null deletes the path
 }
 let i = 0;
 for (const f of files) {

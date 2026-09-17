@@ -8,9 +8,11 @@ import { defineConfig } from "vite";
 export default defineConfig({
 // Base path for GitHub Pages deployment (repo name becomes the path).
 // Locally (Freebuff preview) we keep "/" so nothing breaks; in CI we build
-// with VITE_BASE_PATH="/mapaaguirre.build/". Distinguishing via GITHUB_ACTIONS
-// also works because GitHub sets that variable automatically.
-base: process.env.VITE_BASE_PATH || (process.env.GITHUB_ACTIONS ? '/mapaaguirre.build/' : '/'),
+// with VITE_BASE_PATH="/mapaaguirre.architect/". Distinguishing via
+// GITHUB_ACTIONS also works because GitHub sets that variable automatically.
+base:
+  process.env.VITE_BASE_PATH ||
+  (process.env.GITHUB_ACTIONS ? "/mapaaguirre.architect/" : "/"),
   plugins: [react(), vlyPlugin(), tailwindcss()],
   resolve: {
     alias: {
