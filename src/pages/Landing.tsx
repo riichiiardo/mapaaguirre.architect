@@ -25,7 +25,7 @@ export default function Landing() {
         {/* Background image */}
         <div className="absolute inset-0">
           <img
-            src="/images/home/hero-bg.png"
+            src={`${import.meta.env.BASE_URL}images/home/hero-bg.png`}
             alt="Interior de diseño contemporáneo"
             className="w-full h-full object-cover"
           />
@@ -219,7 +219,7 @@ export default function Landing() {
             >
               <div className="aspect-[3/4] rounded-lg overflow-hidden">
                 <img
-                  src="/images/home/about-portrait.png"
+                  src={`${import.meta.env.BASE_URL}images/home/about-portrait.png`}
                   alt="Maria Paula Aguirre — Arquitecta y Diseñadora de Interiores"
                   className="w-full h-full object-cover"
                 />

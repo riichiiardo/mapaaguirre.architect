@@ -53,7 +53,7 @@ export default function About() {
               >
                 <div className="aspect-[3/4] rounded-lg overflow-hidden">
                   <img
-                    src="/images/home/profile.png"
+                    src={`${import.meta.env.BASE_URL}images/home/profile.png`}
                     alt="Maria Paula Aguirre"
                     className="w-full h-full object-cover"
                   />

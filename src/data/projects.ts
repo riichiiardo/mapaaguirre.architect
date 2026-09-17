@@ -29,11 +29,11 @@ export const projects: Project[] = [
       "Remodelación integral de las oficinas de Liberty Seguros con el objetivo de optimizar el uso de los espacios, crear ambientes más acogedores y mejorar la experiencia de los empleados. La cafetería fue reestructurada y se crearon nuevas áreas de trabajo colaborativas, junto con la reconfiguración del área del Call Center.",
     shortDescription:
       "Transformación de oficinas corporativas hacia espacios más dinámicos y productivos.",
-    coverImage: "/images/oficinas-liberty.png",
+    coverImage: `${import.meta.env.BASE_URL}images/oficinas-liberty.png`,
     gallery: [
-      "/images/oficinas-liberty/gallery-1.png",
-      "/images/oficinas-liberty/gallery-2.png",
-      "/images/oficinas-liberty/gallery-3.png",
+      `${import.meta.env.BASE_URL}images/oficinas-liberty/gallery-1.png`,
+      `${import.meta.env.BASE_URL}images/oficinas-liberty/gallery-2.png`,
+      `${import.meta.env.BASE_URL}images/oficinas-liberty/gallery-3.png`,
     ],
     services: [
       "Diseño de Interiores Corporativos",
@@ -60,11 +60,11 @@ export const projects: Project[] = [
       "Diseño integral de un centro de salud, donde se debía cumplir con la norma de sanidad hospitalaria mientras se integraban los colores y la identidad de la marca del cliente en todos los espacios. Se diseñaron zonas de consulta, hospitalización, cirugía y una nueva área de espera.",
     shortDescription:
       "Centro de salud que equilibra normatividad sanitaria con una atmósfera acogedora y personalizada.",
-    coverImage: "/images/servisalud-compas.png",
+    coverImage: `${import.meta.env.BASE_URL}images/servisalud-compas.png`,
     gallery: [
-      "/images/servisalud-compas/gallery-1.png",
-      "/images/servisalud-compas/gallery-2.png",
-      "/images/servisalud-compas/gallery-3.png",
+      `${import.meta.env.BASE_URL}images/servisalud-compas/gallery-1.png`,
+      `${import.meta.env.BASE_URL}images/servisalud-compas/gallery-2.png`,
+      `${import.meta.env.BASE_URL}images/servisalud-compas/gallery-3.png`,
     ],
     services: [
       "Diseño de Interiores Hospitalarios",
@@ -91,11 +91,11 @@ export const projects: Project[] = [
       "Rediseño completo de un apartaestudio de 40 m², pensado para un cliente joven, amante del café y con un estilo de vida minimalista. El reto fue optimizar el espacio sin perder funcionalidad, a través del diseño de muebles multifuncionales.",
     shortDescription:
       "Pequeño gran espacio: minimalismo, multifuncionalidad y diseño a medida.",
-    coverImage: "/images/apartamento-pipe.png",
+    coverImage: `${import.meta.env.BASE_URL}images/apartamento-pipe.png`,
     gallery: [
-      "/images/apartamento-pipe/gallery-1.png",
-      "/images/apartamento-pipe/gallery-2.png",
-      "/images/apartamento-pipe/gallery-3.png",
+      `${import.meta.env.BASE_URL}images/apartamento-pipe/gallery-1.png`,
+      `${import.meta.env.BASE_URL}images/apartamento-pipe/gallery-2.png`,
+      `${import.meta.env.BASE_URL}images/apartamento-pipe/gallery-3.png`,
     ],
     services: [
       "Diseño de Interiores Residenciales",
@@ -122,11 +122,11 @@ export const projects: Project[] = [
       "Remodelación de una oficina de seguros y abogados, con el objetivo de mejorar la organización de los archivos físicos y optimizar el espacio de trabajo, además de crear un ambiente acogedor para los clientes. La oficina debía incorporar una estética profesional sin perder la comodidad.",
     shortDescription:
       "Espacio profesional que fusiona funcionalidad jurídica con calidez y sofisticación.",
-    coverImage: "/images/carrasco-rodriguez.png",
+    coverImage: `${import.meta.env.BASE_URL}images/carrasco-rodriguez.png`,
     gallery: [
-      "/images/carrasco-rodriguez/gallery-1.png",
-      "/images/carrasco-rodriguez/gallery-2.png",
-      "/images/carrasco-rodriguez/gallery-3.png",
+      `${import.meta.env.BASE_URL}images/carrasco-rodriguez/gallery-1.png`,
+      `${import.meta.env.BASE_URL}images/carrasco-rodriguez/gallery-2.png`,
+      `${import.meta.env.BASE_URL}images/carrasco-rodriguez/gallery-3.png`,
     ],
     services: [
       "Diseño de Interiores Corporativos",
@@ -153,11 +153,11 @@ export const projects: Project[] = [
       "Remodelación de un consultorio estético para una médica estética. El principal objetivo era crear un ambiente lujoso, acogedor y que reflejara la identidad de la marca.",
     shortDescription:
       "Elegancia y protocolo médico fusionados en un espacio de lujo relajante.",
-    coverImage: "/images/consultorio-360.png",
+    coverImage: `${import.meta.env.BASE_URL}images/consultorio-360.png`,
     gallery: [
-      "/images/consultorio-360/gallery-1.png",
-      "/images/consultorio-360/gallery-2.png",
-      "/images/consultorio-360/gallery-3.png",
+      `${import.meta.env.BASE_URL}images/consultorio-360/gallery-1.png`,
+      `${import.meta.env.BASE_URL}images/consultorio-360/gallery-2.png`,
+      `${import.meta.env.BASE_URL}images/consultorio-360/gallery-3.png`,
     ],
     services: [
       "Diseño de Interiores Médicos",

@@ -3,10 +3,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { RequireAuth } from "@/components/RequireAuth";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
-import { ConvexReactClient } from "convex/react";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { convex } from "@/lib/convexClient";
 import "./index.css";
 
 const Landing = lazy(() => import("./pages/Landing.tsx"));
@@ -79,7 +79,15 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+// Vite replaces import.meta.env.BASE_URL at build time. On GitHub Pages it is
+// the repo path (e.g. "/mapaaguirre.build/"); locally it is "/".
+// In the Freebuff iframe preview this constant does not exist (esbuild), so we
+// gate its use with a compile-time-free runtime check and fall back to "/".
+const BASE_URL =
+  typeof import.meta.env !== "undefined" &&
+  "BASE_URL" in (import.meta.env as Record<string, unknown>)
+    ? ((import.meta.env as Record<string, unknown>).BASE_URL as string) || "/"
+    : "/";
 
 function RouteSyncer() {
   const location = useLocation();
@@ -110,9 +118,10 @@ createRoot(document.getElementById("root")!).render(
       <ToolbarErrorBoundary>
         <VlyToolbar />
       </ToolbarErrorBoundary>
-      <ConvexAuthProvider client={convex}>
-        <BrowserRouter>
-          <RouteSyncer />
+      {import.meta.env.VITE_CONVEX_URL ? (
+        <ConvexAuthProvider client={convex}>
+          <BrowserRouter basename={BASE_URL}>
+            <RouteSyncer />
           <Suspense fallback={<RouteLoading />}>
             <Routes>
               <Route path="/" element={<Landing />} />
@@ -132,12 +141,30 @@ createRoot(document.getElementById("root")!).render(
                   </RequireAuth>
                 }
               />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          </Suspense>
+          </BrowserRouter>
+          <Toaster />
+        </ConvexAuthProvider>
+      ) : (
+        // Static build without Convex: render the portfolio without auth.
+        <BrowserRouter basename={BASE_URL}>
+          <RouteSyncer />
+          <Suspense fallback={<RouteLoading />}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/proyectos" element={<Projects />} />
+              <Route path="/proyectos/:slug" element={<ProjectDetail />} />
+              <Route path="/perfil" element={<About />} />
+              <Route path="/contacto" element={<Contact />} />
+              <Route path="/dashboard" element={<Landing />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          <Toaster />
         </BrowserRouter>
-        <Toaster />
-      </ConvexAuthProvider>
+      )}
     </RootErrorBoundary>
   </StrictMode>,
 );

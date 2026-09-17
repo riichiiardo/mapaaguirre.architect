@@ -6,8 +6,11 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Base path for GitHub Pages deployment (repo name becomes the path)
-  base: process.env.GITHUB_ACTIONS ? '/mapaaguirre.build/' : '/',
+// Base path for GitHub Pages deployment (repo name becomes the path).
+// Locally (Freebuff preview) we keep "/" so nothing breaks; in CI we build
+// with VITE_BASE_PATH="/mapaaguirre.build/". Distinguishing via GITHUB_ACTIONS
+// also works because GitHub sets that variable automatically.
+base: process.env.VITE_BASE_PATH || (process.env.GITHUB_ACTIONS ? '/mapaaguirre.build/' : '/'),
   plugins: [react(), vlyPlugin(), tailwindcss()],
   resolve: {
     alias: {
@@ -21,7 +24,6 @@ export default defineConfig({
   build: {
     // Enable source maps for better debugging (disable in production if needed)
     sourcemap: false,
-    // Optimize chunk splitting
     rollupOptions: {
       output: {
         // Manual chunk splitting for better caching and lazy loading
